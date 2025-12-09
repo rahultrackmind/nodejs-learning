@@ -1,11 +1,11 @@
 {
   "name": "nodejs-learning",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rahul Sharma",
@@ -15,5 +15,8 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mongoose": "^9.0.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.7.4"
   }
 }
