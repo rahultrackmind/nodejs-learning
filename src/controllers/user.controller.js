@@ -1,5 +1,6 @@
 import { asyncHandlerPromise } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from '../utils/ApiResponse.js';
 import { User } from "../models/user.model.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 export const registerUser = asyncHandlerPromise(async (req, res) => {
@@ -12,11 +13,12 @@ export const registerUser = asyncHandlerPromise(async (req, res) => {
     // Send  response to frontend - Remove refresh token and password from object.
     // check for user creation
     // if user created return else send error
+    console.log(req.body, 'requrest body')
     if (!req.body || !Object.keys(req.body).length) {
         throw ApiError.sendResponse(res, 400, "Incorrect Payload!")
     }
-    const { fullname, username, email, password } = req.body;
-    const hasEmptyField = [fullname, username, email, password].some((field) => field?.trim() === "");
+    const { fullName, username, email, password } = req.body;
+    const hasEmptyField = [fullName, username, email, password].some((field) => field?.trim() === "");
     if (hasEmptyField) {
         throw ApiError.sendResponse(res, 400, "All fields are required!");
     }
@@ -40,7 +42,7 @@ export const registerUser = asyncHandlerPromise(async (req, res) => {
         throw ApiError.sendResponse(res, 400, "Failed to upload the avatar. Please try again!");
     }
     const user = await User.create({
-        fullname,
+        fullName,
         avatar: avatar.url,
         coverImage: coverImage?.url || "",
         email,
@@ -53,8 +55,5 @@ export const registerUser = asyncHandlerPromise(async (req, res) => {
         throw ApiError(res, 500, "Something went wrong. Failed to register the User. Please try again!")
     }
 
-    res.status(200).json({
-        data: [fullname, username, email, password],
-        message: "ok"
-    })
+    ApiResponse.sendResponse(res, 201, 'User created successfully!', user);
 })
