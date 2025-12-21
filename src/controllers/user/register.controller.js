@@ -1,8 +1,9 @@
-import { asyncHandlerPromise } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
-import { ApiResponse } from '../utils/ApiResponse.js';
-import { User } from "../models/user.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
+import { asyncHandlerPromise } from "../../utils/asyncHandler.js";
+import { ApiError } from "../../utils/ApiError.js";
+import { ApiResponse } from '../../utils/ApiResponse.js';
+import { User } from "../../models/user.model.js";
+import { uploadOnCloudinary } from "../../utils/cloudinary.js";
+import { emptyPayloadValiationCheck } from "../../utils/validation.js";
 export const registerUser = asyncHandlerPromise(async (req, res) => {
     // get user detail from frontend
     // validation
@@ -13,10 +14,8 @@ export const registerUser = asyncHandlerPromise(async (req, res) => {
     // Send  response to frontend - Remove refresh token and password from object.
     // check for user creation
     // if user created return else send error
-    console.log(req.body, 'requrest body')
-    if (!req.body || !Object.keys(req.body).length) {
-        throw ApiError.sendResponse(res, 400, "Incorrect Payload!")
-    }
+
+    emptyPayloadValiationCheck(req, res);
     const { fullName, username, email, password } = req.body;
     const hasEmptyField = [fullName, username, email, password].some((field) => field?.trim() === "");
     if (hasEmptyField) {

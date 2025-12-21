@@ -1,3 +1,5 @@
+import { ApiError } from "./ApiError.js";
+
 // experimental for now
 export function emptyValidationCheck(fields) {
     if (!Array.isArray(fields) || !fields.length) return {
@@ -20,4 +22,10 @@ export function emptyValidationCheck(fields) {
         isEmpty,
         errorMessage
     };
+}
+
+export function emptyPayloadValiationCheck(req, res, message = "Invalid Payload!") {
+    if (!req.body || !Object.keys(req.body).length) {
+        return ApiError.sendResponse(res, 400, message, null)
+    }
 }

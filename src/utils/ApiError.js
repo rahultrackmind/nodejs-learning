@@ -15,7 +15,7 @@ export class ApiError extends Error {
     }
 
 
-    static sendResponse(res, statusCode, message = "Something went wrong", errors = [], stacks = []) {
+    static sendResponse(res, statusCode = 500, message = "Something went wrong", errors = [], stacks = []) {
         return res.status(statusCode).json({
             data: null,
             message,
