@@ -29,7 +29,7 @@ export const registerUser = asyncHandlerPromise(async (req, res) => {
     if (existedUser) {
         throw ApiError.sendResponse(res, 409, "User already exist!")
     }
-    const avatarLocalPath = req.files?.avatar?.[0]?.path;
+    const avatarLocalPath = req.files?.avatar?.[0]?.path; //If multiple multer file then use files
     const coverImageLocalPath = req.files?.coverImage?.[0]?.path;
     if (!avatarLocalPath) {
         throw ApiError.sendResponse(res, 400, "Avatar is required!");

@@ -5,6 +5,10 @@ import { logoutUser } from "../controllers/user/logout.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { authUser } from "../middlewares/auth.middleware.js";
 import { refreshAccessToken } from "../controllers/user/refreshAccessToken.controller.js";
+import { resetPassword } from "../controllers/user/resetPassword.controller.js";
+import { getCurrentLoggedInUser } from "../controllers/user/currentLoggedInUser.controller.js";
+import { updateProfile } from "../controllers/user/updateProfile.controller.js";
+import { updateUserAvatar } from "../controllers/user/updateUserAvatar.controller.js";
 const router = Router();
 
 router.route("/register").post(upload.fields([
@@ -20,6 +24,10 @@ router.route("/register").post(upload.fields([
 
 router.route("/login").post(loginUser);
 router.route("/logout").get(authUser, logoutUser);
-router.route("/refreshAccessToken").get(refreshAccessToken)
+router.route("/refreshAccessToken").get(refreshAccessToken);
+router.route('/resetPassword').post(authUser, resetPassword);
+router.route('/loggedInUser').get(authUser, getCurrentLoggedInUser);
+router.route('/updateProfile').put(authUser, updateProfile);
+router.route('/updateUserAvatar').patch(authUser, upload.single("avatar"), updateUserAvatar)
 
 export default router;

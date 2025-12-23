@@ -51,7 +51,7 @@ const userSchema = new Schema(
 //mongoose hooks
 userSchema.pre("save", async function () {
     if (!this.isModified("password")) return;
-    this.password = bcrypt.hash(this.password, +process.env.SALT_ROUNDS || 10);
+    this.password = await bcrypt.hash(this.password, +process.env.SALT_ROUNDS || 10);
 });
 
 //custom methods
