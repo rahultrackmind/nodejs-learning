@@ -9,6 +9,7 @@ import { resetPassword } from "../controllers/user/resetPassword.controller.js";
 import { getCurrentLoggedInUser } from "../controllers/user/currentLoggedInUser.controller.js";
 import { updateProfile } from "../controllers/user/updateProfile.controller.js";
 import { updateUserAvatar } from "../controllers/user/updateUserAvatar.controller.js";
+import { updateUserCoverImage } from "../controllers/user/updateUserCoverImage.controller.js";
 const router = Router();
 
 router.route("/register").post(upload.fields([
@@ -29,5 +30,5 @@ router.route('/resetPassword').post(authUser, resetPassword);
 router.route('/loggedInUser').get(authUser, getCurrentLoggedInUser);
 router.route('/updateProfile').put(authUser, updateProfile);
 router.route('/updateUserAvatar').patch(authUser, upload.single("avatar"), updateUserAvatar)
-
+router.route('/updateUserCoverImage').patch(authUser, upload.single("coverImage"), updateUserCoverImage)
 export default router;
