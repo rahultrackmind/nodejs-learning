@@ -10,6 +10,8 @@ import { getCurrentLoggedInUser } from "../controllers/user/currentLoggedInUser.
 import { updateProfile } from "../controllers/user/updateProfile.controller.js";
 import { updateUserAvatar } from "../controllers/user/updateUserAvatar.controller.js";
 import { updateUserCoverImage } from "../controllers/user/updateUserCoverImage.controller.js";
+import { getUserChannelProfile } from "../controllers/user/userChannelProfile.controller.js";
+import { getWatchHistory } from "../controllers/user/userWatchHistory.controller.js";
 const router = Router();
 
 router.route("/register").post(upload.fields([
@@ -30,5 +32,7 @@ router.route('/resetPassword').post(authUser, resetPassword);
 router.route('/loggedInUser').get(authUser, getCurrentLoggedInUser);
 router.route('/updateProfile').put(authUser, updateProfile);
 router.route('/updateUserAvatar').patch(authUser, upload.single("avatar"), updateUserAvatar)
-router.route('/updateUserCoverImage').patch(authUser, upload.single("coverImage"), updateUserCoverImage)
+router.route('/updateUserCoverImage').patch(authUser, upload.single("coverImage"), updateUserCoverImage);
+router.route('/channel/:username').get(authUser, getUserChannelProfile);
+router.route('/watchHistory').get(authUser, getWatchHistory);
 export default router;
