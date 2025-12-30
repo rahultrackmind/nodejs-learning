@@ -5,7 +5,7 @@ import { asyncHandlerPromise } from "../../utils/asyncHandler.js"
 export const logoutUser = asyncHandlerPromise(async (req, res) => {
     await User.findByIdAndUpdate(req.user._id, {
         $set: {
-            refreshToken: null
+            refreshToken: 1 //this remove the field from document
         }
     });
 
